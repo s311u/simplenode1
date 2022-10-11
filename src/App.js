@@ -1,8 +1,27 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 
-class App extends Component {
+const URL = 'http://localhost:3001/';
+
+function App() {
+    const [message, setMessage] = useState('test');
+
+    useEffect(() => {
+        axios.get(URL)
+            .then((response) => {
+                console.log(response.data);
+                setMessage(response.data.message);
+            })
+            .catch((error) => {
+                setMessage(error);
+            });
+    }, []);
+    return (
+        <p>{message}</p>
+    );
+}
+/* class App extends Component {
     state = { loading: false };
 
     componentDidMount() {
@@ -26,6 +45,6 @@ class App extends Component {
             </div>
         );
     }
-}
+} */
 
 export default App;
